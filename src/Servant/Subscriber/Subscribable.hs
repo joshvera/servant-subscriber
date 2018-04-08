@@ -79,6 +79,7 @@ type family IsValidEndpoint endpoint :: Constraint where
 instance HasServer sublayout context => HasServer (Subscribable :> sublayout) context where
   type ServerT (Subscribable :> sublayout) m = ServerT sublayout m
   route _ = route (Proxy :: Proxy sublayout)
+  hoistServerWithContext _ _ nt s = hoistServerWithContext (Proxy :: Proxy sublayout) (Proxy :: Proxy context) nt s
 
 
 instance HasForeign lang ftype sublayout => HasForeign lang ftype (Subscribable :> sublayout) where
